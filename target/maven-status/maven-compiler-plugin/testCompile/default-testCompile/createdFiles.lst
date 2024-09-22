@@ -1,0 +1,3 @@
+com\jenkins\featuretest\LoginTest.class
+com\jenkins\featuretest\BaseTest.class
+com\jenkins\featuretest\DataProviderTest.class
