@@ -1,4 +1,0 @@
-node {
-    
-echo "Scripted pipeline"
-}
