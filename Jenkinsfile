@@ -11,17 +11,21 @@ pipeline {
 		
 		stage('Checkout'){
 			steps{
-				echo 'Checkout git. >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
+				step{
+					echo 'Checkout git. >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
 				git branch: 'jenkinstestbranch', url: 'https://github.com/ervansh/JenkinsRepo.git'
+				}
 			}
 		}
 		
 		stage('Compile'){
 			steps{
-				echo "compile. >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+				step{
+					echo "compile. >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
     			script: 'mvn compile'
     			echo "compilation completed. >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-			}
+
+				}			}
 		}
         stage('Build') {
             steps {
