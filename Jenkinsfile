@@ -15,7 +15,7 @@ pipeline {
         stage('Build') {
             steps {
                  echo "building >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-   				 bat label: '', script: 'mvn package'
+   				 script: 'mvn clean package'
     			 echo "build success. >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
             }
         }
