@@ -2,8 +2,7 @@ pipeline {
     agent any
 
     stages {
-		
-		stage('Information'){
+		stage('Initialize'){
 			steps{
 				echo "Running build #${env.BUILD_ID} on Jenkins ${env.JENKINS_URL}"
 			}
@@ -11,35 +10,16 @@ pipeline {
 		
 		stage('Checkout'){
 			steps{
-				step{
 					echo 'Checkout git. >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
 				git branch: 'jenkinstestbranch', url: 'https://github.com/ervansh/JenkinsRepo.git'
-				}
 			}
 		}
 		
-		stage('Compile'){
-			steps{
-				step{
-					echo "compile. >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-    			script: 'mvn compile'
-    			echo "compilation completed. >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-
-				}			}
-		}
         stage('Build') {
             steps {
                  echo "building >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-   				 script: 'mvn clean package'
+   				 bat label: '', script: 'mvn package'
     			 echo "build success. >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-                
-            }
-        }
-        stage('Test') {
-            steps {
-                echo 'Testing..>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
-                script: 'mvn clean test'
-    			 echo "Test success. >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
             }
         }
         
@@ -50,23 +30,12 @@ pipeline {
      			echo "artifact preserved >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
 			}
 		}
-		        stage('Publish Report') {
-            steps {
-                echo 'Publishing report....>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
-                step([$class: 'JUnitResultArchiver', checksName: '', testResults: 'target/surefire-reports/junitreports/TEST-*.xml'])
-                
-            }
-        }
-                stage('Trigger Email') {
-            steps {
-                echo 'Email....>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
-                emailext body: 'Build body.', recipientProviders: [buildUser()], subject: 'Build status', to: 'abc@gmail.com'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying....>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Its a dummy.'
-            }
-        }
+	
+        post{
+			always{
+				echo 'Pipeline finished.'
+				step([$class: 'JUnitResultArchiver', checksName: '', testResults: 'target/surefire-reports/junitreports/TEST-*.xml'])
+			}
+		}
     }
 }
