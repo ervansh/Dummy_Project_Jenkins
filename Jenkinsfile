@@ -16,8 +16,9 @@ pipeline {
             steps {
                  echo "building >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
    				script{
-					 script: 'mvn package'
+					 env.path = 'C:/apache-maven-3.9.8/bin;C:/Program Files/Java/jdk-21/bin;C:/Windows/System32'
 				}
+				script: 'mvn package'
     			 echo "build success. >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
             }
         }
