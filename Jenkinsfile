@@ -15,7 +15,7 @@ pipeline {
         stage('Build') {
             steps {
                  echo "building >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-   				 script: 'mvn clean package'
+   				 script: 'mvn package'
     			 echo "build success. >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
             }
         }
