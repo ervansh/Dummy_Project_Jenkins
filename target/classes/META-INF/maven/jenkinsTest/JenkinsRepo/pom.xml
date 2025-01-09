@@ -23,16 +23,6 @@
 			<artifactId>webdrivermanager</artifactId>
 			<version>5.9.2</version>
 		</dependency>
-		<dependency>
-			<groupId>com.browserstack</groupId>
-			<artifactId>browserstack-local-java</artifactId>
-			<version>1.1.5</version>
-		</dependency>
-		<dependency>
-			<groupId>org.yaml</groupId>
-			<artifactId>snakeyaml</artifactId>
-			<version>2.3</version>
-		</dependency>
 
 	</dependencies>
 
@@ -45,10 +35,8 @@
 					<version>3.5.0</version>
 					<configuration>
 						<suiteXmlFiles>
-							<suiteXmlFile>
-								src/test/resources/runners/dataTest.xml</suiteXmlFile>
-							<suiteXmlFile>
-								src/test/resources/runners/loginTest.xml</suiteXmlFile>
+							<suiteXmlFile>src/test/resources/runners/dataTest.xml</suiteXmlFile>
+							<suiteXmlFile>src/test/resources/runners/loginTest.xml</suiteXmlFile>
 						</suiteXmlFiles>
 					</configuration>
 				</plugin>

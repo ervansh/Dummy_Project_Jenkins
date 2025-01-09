@@ -3,14 +3,15 @@ package com.jenkins.featurepages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
-public class BasePage {
+public abstract class BasePage {
 
-	private WebDriver driver;
+	protected WebDriver driver;
 
 	public BasePage(WebDriver driver) {
-		super();
 		this.driver = driver;
+		PageFactory.initElements(driver, this);
 	}
 
 	@FindBy()
