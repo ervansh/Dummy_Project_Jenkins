@@ -9,13 +9,13 @@ pipeline {
 		stage('Checkout'){
 			steps{
 					echo 'Checkout git. >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
-				git branch: 'jenkinstestbranch', url: 'https://github.com/ervansh/JenkinsRepo.git'
+				    git branch: 'jenkinstestbranch', url: 'https://github.com/ervansh/JenkinsRepo.git'
 			}
 		}
         stage('Build') {
             steps {
                  echo "building >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-				bat label: '', script: 'mvn package'
+				 bat label: '', script: 'mvn package'
     			 echo "build success. >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
             }
         }

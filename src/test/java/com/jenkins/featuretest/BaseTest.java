@@ -2,23 +2,41 @@ package com.jenkins.featuretest;
 
 import java.time.Duration;
 
+import org.jspecify.annotations.Nullable;
 import org.openqa.selenium.WebDriver;
-import org.testng.annotations.AfterClass;
+import org.openqa.selenium.WebElement;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Parameters;
 
-import com.jenkins.selenium.core.browserhandler.BrowserFactory;
+import com.jenkins.selenium.core.browserhandler.BrowserstackFactory;
+import com.jenkins.selenium.core.browserhandler.DriverManager;
+import com.jenkins.selenium.core.utils.ConfigReader;
 
 public class BaseTest {
 
-	public static WebDriver driver;
+	public WebDriver driver;
+	boolean useBrowserStack = false;
+	String google = "https://www.google.com/";
+	String saucedemo = "https://www.saucedemo.com/";
+	ConfigReader config;
+
+	public BaseTest() {
+		config = new ConfigReader("config.properties");
+	}
 
 	@BeforeClass
-	@Parameters("browser")
-	public void setUpDriver(String browser) {
-		driver = BrowserFactory.getDriver(browser).createDriver();
-		driver.get("https://www.google.com/");
+	public void setUpDriver() {
+		String browser = config.getPropertyValue("browser");
+		System.out.println(browser+" Browser ??");
+		System.out.println("Setup AUT.");
+		if(useBrowserStack) {
+			driver = BrowserstackFactory.createBrowserstackDriver();
+		} else {
+		driver = DriverManager.getBrowserInstance(browser);
+		 }
+
+		driver.get(saucedemo);
 		driver.manage().window().maximize();
 		Duration time = driver.manage().timeouts().getPageLoadTimeout();
 		driver.manage().timeouts().pageLoadTimeout(time);
@@ -34,10 +52,24 @@ public class BaseTest {
 		System.out.println("Setup after method.");
 	}
 
-	@AfterClass
+	@AfterSuite(alwaysRun = true)
 	public void tearDown() {
 		if (driver != null) {
 			driver.quit();
 		}
+	}
+
+	public boolean isElementDisplayed(WebElement locator) throws InterruptedException {
+		Thread.sleep(Duration.ofSeconds(2000));
+		return locator.isDisplayed();
+	}
+
+	public boolean verifyPageTitle(String textToVerify) {
+		@Nullable
+		String title = driver.getTitle();
+		System.out.println(title + " home page title.");
+		if (title.equals(textToVerify))
+			return true;
+		return false;
 	}
 }

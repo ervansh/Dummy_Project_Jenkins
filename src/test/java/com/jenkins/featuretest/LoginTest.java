@@ -8,11 +8,14 @@ import com.jenkins.featurepages.HomePage;
 public class LoginTest extends BaseTest {
 
 	HomePage homepage;
+	//ConfigReader config;
 
 	@Test
 	public void isHomePageDisplayed() {
 		homepage = new HomePage(driver);
-		Assert.assertTrue(homepage.isHomePage());
+		homepage.getUsername().sendKeys("standard_user");
+
+		Assert.assertTrue(homepage.getBtnLogin().isDisplayed());
 	}
 
 }
