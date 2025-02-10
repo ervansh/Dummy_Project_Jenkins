@@ -16,7 +16,6 @@ public class YamlReader {
 		yaml = new Yaml();
 		try (InputStream inputstream = YamlReader.class.getClassLoader().getResourceAsStream("browserstack.yml")) {
 			browserstackconfig = yaml.loadAs(inputstream, BrowserStackConfig.class);
-			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
